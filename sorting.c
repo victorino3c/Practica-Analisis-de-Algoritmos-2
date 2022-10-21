@@ -146,10 +146,11 @@ int merge(int* tabla, int ip, int iu, int imedio)
 
   for (i = ip; i <= iu; i++)
   {
-    tabla[i] = t_aux[i];
+    tabla[i] = t_aux[i]; /*Sumarle imedio cuando mitad derecha? mas opciones*/
   }
 
   free(t_aux);
   return ob;
+  /*Cuando copiamos variables la posicion de tabla no se corresponde con la de la tabla auxiliar, ip puede ser 5 y en la auxiliar es 0*/
 }
 
