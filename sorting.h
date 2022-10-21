@@ -27,6 +27,7 @@ typedef int (* pfunc_sort)(int*, int, int);
 int SelectSort(int* array, int ip, int iu);
 int SelectSortInv(int* array, int ip, int iu);
 int min(int* array, int ip, int iu, int *flag);
-
+int mergesort(int* tabla, int ip, int iu);
+int merge(int* tabla, int ip, int iu, int imedio);
 
 #endif
