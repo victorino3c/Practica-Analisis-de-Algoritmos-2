@@ -11,6 +11,7 @@
 
 
 #include "sorting.h"
+int count = 0;
 
 /***************************************************/
 /* Function: SelectSort    Date: 23-09-2022        */
@@ -77,6 +78,7 @@ int min(int* array, int ip, int iu, int *flag)
 
 }
 
+/*
 int mergesort(int* tabla, int ip, int iu)
 {
   int m;
@@ -87,7 +89,7 @@ int mergesort(int* tabla, int ip, int iu)
   } 
   if (ip == iu)
   {
-    return ob; /*Devolver variable de ob*/
+    return ob; *//*Devolver variable de ob*//*
   } else 
   {
     m = (ip+iu)/2;
@@ -146,17 +148,19 @@ int merge(int* tabla, int ip, int iu, int imedio)
 
   for (i = ip; i <= iu; i++)
   {
-    tabla[i] = t_aux[i]; /*Sumarle imedio cuando mitad derecha? mas opciones*/
+    tabla[i] = t_aux[i]; *//*Sumarle imedio cuando mitad derecha? mas opciones*//*
   }
 
   free(t_aux);
   return ob;
-  /*Cuando copiamos variables la posicion de tabla no se corresponde con la de la tabla auxiliar, ip puede ser 5 y en la auxiliar es 0*/
+  *//*Cuando copiamos variables la posicion de tabla no se corresponde con la de la tabla auxiliar, ip puede ser 5 y en la auxiliar es 0*//*
 }
+*/
 
 int quicksort(int* tabla, int ip, int iu)
 {
-  int m= 0, count=0, ret=0;
+  int m= 0, ret = 0;
+
   /*Control Error*/
   if((ip > iu) || !tabla)
   {
@@ -170,7 +174,7 @@ int quicksort(int* tabla, int ip, int iu)
 
     else
     {
-      ret=partition(tabla, ip, iu, &m);
+      ret=partition(tabla, ip, iu, &m); /*La m es el elemento medio despues de median, pero en partition cambia a la posicion inicial*/
       if(ret!= (-1))
       {
         count+=ret;
@@ -194,54 +198,53 @@ int quicksort(int* tabla, int ip, int iu)
 
 int partition(int* tabla, int ip, int iu,int *pos)
 {
-  int k=0, aux=0, i, aux2=0, aux3=0, count=0;
+  int k=0, aux=0, i, aux2=0, aux3=0, count = 0;
 
-  if(median(tabla, ip, iu, pos)!=0){
+  /*Error control*/
+  if(median(tabla, ip, iu, pos)!=0 || ip > iu || !tabla){
     return ERR;
   }
 
-  if((ip > iu) || !tabla)
-  {
-    return ERR;
-  }
-
+  /*K = primer elemento del trozo de tabla dado*/
   k=tabla[(*pos)];
 
+  /*Cambia el valor del primer elemento de la tabla por el del ultimo*/
   aux = tabla[ip];
-  tabla[ip]=tabla[iu];
-  tabla[iu]= aux;
+  tabla[ip]=tabla[(*pos)];
+  tabla[(*pos)]= aux;
 
   (*pos)=ip;
 
-  for(i=0; i<= (ip+1); i++){
-    if(tabla[i]<k)
+  /*Empize a contar la tabla desde 0 aunque ip = 5? Siendo ip el indice del primer elemento a ordenar*/
+  for(i=ip+1; i<= iu; i++){
+
+    if(tabla[i]<k) /*Si la posicion comprobada es menor al valor de la posicion media*/
     {
+      count++;
       (*pos)++;
+      /*Hace un switch de la posicion comprobada pos+ 1*/
       aux2 = tabla[i];
       tabla[i]=tabla[(*pos)];
       tabla[(*pos)]= aux2;
     }
+    /*Hace un switch del primer elemento por el elemento correspondiente a pos. Si se ha cumplido el if deshace lo anterior? Si no se ha cumplido el if cambia el valor de la primera posicion por el valor de la ¿primera posicion?*/
+  }
     aux3 = tabla[ip];
     tabla[ip]=tabla[(*pos)];
     tabla[(*pos)]= aux3;
-    count++;
-  }
+
   return count;
 }
 
 int median(int *tabla, int ip, int iu,int *pos)
 {
-  (*pos)=0;
-  if(!tabla){
+  /*Error control*/
+  if(!tabla || ip > iu){
     return ERR;
   }
 
-   if(ip > iu)
-  {
-    return ERR;
-  }
-
-  (*pos)=tabla[(ip+iu)/2];
+  /*Esto devueleve el valor del elemento medio de la tabla, no su indice. Está bien?*/
+  (*pos)=ip;
 
   if(!pos)
   {
@@ -251,4 +254,3 @@ int median(int *tabla, int ip, int iu,int *pos)
   return 0;
   
 }
-
