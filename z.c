@@ -137,3 +137,53 @@ int median(int *tabla, int ip, int iu,int *pos)
   return 0;
   
 }
+
+int median_avg(int *tabla, int ip, int iu,int *pos)
+{
+     /*Error control*/
+  if(!tabla || ip > iu){
+    return ERR;
+  }
+
+  /*Esto devueleve el valor del elemento medio de la tabla, no su indice. Está bien?*/
+  (*pos)=(ip+iu)/2;
+
+  if(!pos)
+  {
+    return ERR;
+  }
+
+  return 0;
+   
+}
+
+int median_stat(int *tabla, int ip, int iu,int *pos)
+{
+
+int aux;
+/*Error control*/
+  if(!tabla || ip > iu){
+    return ERR;
+  }
+
+  /*Esto devueleve el valor del elemento medio de la tabla, no su indice. Está bien?*/
+  aux=(ip+iu)/2;
+
+    if ((tabla[aux] < tabla[ip] && tabla[aux] > tabla[iu]) || (tabla[aux] > tabla[ip] && tabla[aux] < tabla[iu]))
+    {
+        (*pos) = aux;
+    } else if ((tabla[ip] < tabla[aux] && tabla[ip] > tabla[iu]) || (tabla[ip] > tabla[aux] && tabla[ip] < tabla[iu]))
+    {
+        (*pos) = ip;
+    } else {
+        (*pos) = iu;
+    }
+
+  if(!pos)
+  {
+    return ERR;
+  }
+
+  return 0;
+   
+}
