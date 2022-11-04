@@ -154,3 +154,101 @@ int merge(int* tabla, int ip, int iu, int imedio)
   /*Cuando copiamos variables la posicion de tabla no se corresponde con la de la tabla auxiliar, ip puede ser 5 y en la auxiliar es 0*/
 }
 
+int quicksort(int* tabla, int ip, int iu)
+{
+  int m= 0, count=0, ret=0;
+  /*Control Error*/
+  if((ip > iu) || !tabla)
+  {
+    return ERR;
+  }
+
+  if(ip==iu)
+  {
+    return count;
+  }
+
+    else
+    {
+      ret=partition(tabla, ip, iu, &m);
+      if(ret!= (-1))
+      {
+        count+=ret;
+      }
+      else{
+        return ERR;
+      }
+      
+      if(ip < m-1)
+      {
+        quicksort(tabla,ip, m-1);
+      }
+      if(m+1 < iu)
+      {
+        quicksort(tabla, m+1, iu);
+      }
+    }
+  return count;
+
+}
+
+int partition(int* tabla, int ip, int iu,int *pos)
+{
+  int k=0, aux=0, i, aux2=0, aux3=0, count=0;
+
+  if(median(tabla, ip, iu, pos)!=0){
+    return ERR;
+  }
+
+  if((ip > iu) || !tabla)
+  {
+    return ERR;
+  }
+
+  k=tabla[(*pos)];
+
+  aux = tabla[ip];
+  tabla[ip]=tabla[iu];
+  tabla[iu]= aux;
+
+  (*pos)=ip;
+
+  for(i=0; i<= (ip+1); i++){
+    if(tabla[i]<k)
+    {
+      (*pos)++;
+      aux2 = tabla[i];
+      tabla[i]=tabla[(*pos)];
+      tabla[(*pos)]= aux2;
+    }
+    aux3 = tabla[ip];
+    tabla[ip]=tabla[(*pos)];
+    tabla[(*pos)]= aux3;
+    count++;
+  }
+  return count;
+}
+
+int median(int *tabla, int ip, int iu,int *pos)
+{
+  (*pos)=0;
+  if(!tabla){
+    return ERR;
+  }
+
+   if(ip > iu)
+  {
+    return ERR;
+  }
+
+  (*pos)=tabla[(ip+iu)/2];
+
+  if(!pos)
+  {
+    return ERR;
+  }
+
+  return 0;
+  
+}
+
