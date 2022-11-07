@@ -11,7 +11,7 @@
 
 
 #include "sorting.h"
-int count = 0;
+int count = 0, ob = 0;
 
 /***************************************************/
 /* Function: SelectSort    Date: 23-09-2022        */
@@ -78,7 +78,6 @@ int min(int* array, int ip, int iu, int *flag)
 
 }
 
-/*
 int mergesort(int* tabla, int ip, int iu)
 {
   int m;
@@ -89,7 +88,7 @@ int mergesort(int* tabla, int ip, int iu)
   } 
   if (ip == iu)
   {
-    return ob; *//*Devolver variable de ob*//*
+    return ob; 
   } else 
   {
     m = (ip+iu)/2;
@@ -103,15 +102,14 @@ int mergesort(int* tabla, int ip, int iu)
 int merge(int* tabla, int ip, int iu, int imedio)
 {
   int *t_aux = NULL;
-  int i = ip, j = imedio+1, k = ip;
+  int i = ip, j = imedio+1, k = 0;
 
-  printf("%d-%d\n\n", iu, ip);
   if (!(t_aux = (int*)malloc(((iu-ip)+1)*sizeof(int))))
   {
     return ERR;
   }
-  printf("2\n\n");
 
+  /*Coloca elementos*/
   while (i <= imedio && j <= iu)
   {
     ob++;
@@ -128,6 +126,7 @@ int merge(int* tabla, int ip, int iu, int imedio)
     k++;
   }
 
+  /*Rellena elementos no colocados del array*/
   if (i > imedio)
   {
     while (j <= iu)
@@ -140,22 +139,47 @@ int merge(int* tabla, int ip, int iu, int imedio)
   {
     while (i <= imedio)
     {
+      /*COMENTARIOS DE DEBUGEO:*/
+      /*printf("\n%d - %d\n", tabla[i], k);*/
       t_aux[k] = tabla[i];
       i++;
       k++;
     }
   }
 
-  for (i = ip; i <= iu; i++)
+  /*COMENTARIOS DE DEBUEGEO:*/
+  /*printf("\n-------------------------------------------------------------\nAntes de cambio:\n\n");
+  printf("%d-%d\n\n", ip, iu);
+  for (i = 0; i < max; i++)
   {
-    tabla[i] = t_aux[i]; *//*Sumarle imedio cuando mitad derecha? mas opciones*//*
+    printf("%d ", tabla[i]);
   }
+  printf("\n\n");
+
+  for (i = 0; i <= iu-ip; i++)
+  {
+    printf("%d ", t_aux[i]);
+  }
+  printf("\n\n");
+  */
+
+  for (i = ip, j = 0; i <= iu && j <= iu-ip; i++, j++)
+  {
+    tabla[i] = t_aux[j];
+  }
+
+  /*COMENTARIOS DE DEBUGEO:*/
+  /*printf("Despues de cambio:\n\n");
+  for (i = 0; i < max; i++)
+  {
+    printf("%d ", tabla[i]);
+  }
+  printf("\n\n");
+  */
 
   free(t_aux);
   return ob;
-  *//*Cuando copiamos variables la posicion de tabla no se corresponde con la de la tabla auxiliar, ip puede ser 5 y en la auxiliar es 0*//*
 }
-*/
 
 int quicksort(int* tabla, int ip, int iu)
 {
