@@ -11,7 +11,7 @@
 
 
 #include "sorting.h"
-int count = 0, ob = 0;
+int count = 0;
 
 /***************************************************/
 /* Function: SelectSort    Date: 23-09-2022        */
@@ -80,7 +80,7 @@ int min(int* array, int ip, int iu, int *flag)
 
 int mergesort(int* tabla, int ip, int iu)
 {
-  int m;
+  int m, ret = 0, counts = 0;
 
   if (ip > iu)
   {
@@ -88,21 +88,39 @@ int mergesort(int* tabla, int ip, int iu)
   } 
   if (ip == iu)
   {
-    return ob; 
+    return counts; 
   } else 
   {
     m = (ip+iu)/2;
-    mergesort(tabla, ip, m);
-    mergesort(tabla, m+1, iu);
+    ret = mergesort(tabla, ip, m);
+    if (ret == ERR)
+    {
+      return ERR;
+    }
+    counts+= ret;
 
-    return merge(tabla, ip, iu, m);
+    ret = mergesort(tabla, m+1, iu);
+    if (ret == ERR)
+    {
+      return ERR;
+    }
+    counts += ret;
+
+    ret = merge(tabla, ip, iu, m);
+    if (ret == ERR)
+    {
+      return ERR;
+    }
+    counts += ret;
+
+    return counts;
   }
 }
 
 int merge(int* tabla, int ip, int iu, int imedio)
 {
   int *t_aux = NULL;
-  int i = ip, j = imedio+1, k = 0;
+  int i = ip, j = imedio+1, k = 0, ob = 0;
 
   if (!(t_aux = (int*)malloc(((iu-ip)+1)*sizeof(int))))
   {
@@ -209,11 +227,11 @@ int quicksort(int* tabla, int ip, int iu)
       
       if(ip < m-1)
       {
-        quicksort(tabla,ip, m-1);
+        count+=quicksort(tabla,ip, m-1);
       }
       if(m+1 < iu)
       {
-        quicksort(tabla, m+1, iu);
+        count+=quicksort(tabla, m+1, iu);
       }
     }
   return count;
