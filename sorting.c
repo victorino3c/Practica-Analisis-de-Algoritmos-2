@@ -11,7 +11,6 @@
 
 
 #include "sorting.h"
-int count = 0;
 
 /***************************************************/
 /* Function: SelectSort    Date: 23-09-2022        */
@@ -201,7 +200,7 @@ int merge(int* tabla, int ip, int iu, int imedio)
 
 int quicksort(int* tabla, int ip, int iu)
 {
-  int m= 0, ret = 0;
+  int m= 0, ret = 0, count = 0;
 
   /*Control Error*/
   if((ip > iu) || !tabla)
@@ -227,11 +226,11 @@ int quicksort(int* tabla, int ip, int iu)
       
       if(ip < m-1)
       {
-        count+=quicksort(tabla,ip, m-1);
+        count += quicksort(tabla,ip, m-1);
       }
       if(m+1 < iu)
       {
-        count+=quicksort(tabla, m+1, iu);
+        count += quicksort(tabla, m+1, iu);
       }
     }
   return count;
@@ -257,19 +256,17 @@ int partition(int* tabla, int ip, int iu,int *pos)
 
   (*pos)=ip;
 
-  /*Empize a contar la tabla desde 0 aunque ip = 5? Siendo ip el indice del primer elemento a ordenar*/
   for(i=ip+1; i<= iu; i++){
-
+    count++;
     if(tabla[i]<k) /*Si la posicion comprobada es menor al valor de la posicion media*/
     {
-      count++;
       (*pos)++;
       /*Hace un switch de la posicion comprobada pos+ 1*/
       aux2 = tabla[i];
       tabla[i]=tabla[(*pos)];
       tabla[(*pos)]= aux2;
     }
-    /*Hace un switch del primer elemento por el elemento correspondiente a pos. Si se ha cumplido el if deshace lo anterior? Si no se ha cumplido el if cambia el valor de la primera posicion por el valor de la ¿primera posicion?*/
+    /*Hace un switch del primer elemento por el elemento correspondiente a pos.*/
   }
     aux3 = tabla[ip];
     tabla[ip]=tabla[(*pos)];
@@ -285,7 +282,6 @@ int median(int *tabla, int ip, int iu,int *pos)
     return ERR;
   }
 
-  /*Esto devueleve el valor del elemento medio de la tabla, no su indice. Está bien?*/
   (*pos)=ip;
 
   if(!pos)
@@ -295,4 +291,54 @@ int median(int *tabla, int ip, int iu,int *pos)
 
   return 0;
   
+}
+
+int median_avg(int *tabla, int ip, int iu,int *pos)
+{
+     /*Error control*/
+  if(!tabla || ip > iu){
+    return ERR;
+  }
+
+  /*Esto devueleve el valor del elemento medio de la tabla, no su indice. Está bien?*/
+  (*pos)=(ip+iu)/2;
+
+  if(!pos)
+  {
+    return ERR;
+  }
+
+  return 0;
+   
+}
+
+int median_stat(int *tabla, int ip, int iu,int *pos)
+{
+
+int aux;
+/*Error control*/
+  if(!tabla || ip > iu){
+    return ERR;
+  }
+
+  /*Esto devueleve el valor del elemento medio de la tabla, no su indice. Está bien?*/
+  aux=(ip+iu)/2;
+
+    if ((tabla[aux] < tabla[ip] && tabla[aux] > tabla[iu]) || (tabla[aux] > tabla[ip] && tabla[aux] < tabla[iu]))
+    {
+        (*pos) = aux;
+    } else if ((tabla[ip] < tabla[aux] && tabla[ip] > tabla[iu]) || (tabla[ip] > tabla[aux] && tabla[ip] < tabla[iu]))
+    {
+        (*pos) = ip;
+    } else {
+        (*pos) = iu;
+    }
+
+  if(!pos)
+  {
+    return ERR;
+  }
+
+  return 0;
+   
 }
