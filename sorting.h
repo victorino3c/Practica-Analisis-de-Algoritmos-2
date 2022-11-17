@@ -9,6 +9,9 @@
  *
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #ifndef SORTING_H
 #define SORTING_H
 
