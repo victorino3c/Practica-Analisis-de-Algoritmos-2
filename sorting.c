@@ -215,7 +215,7 @@ int quicksort(int* tabla, int ip, int iu)
 
     else
     {
-      ret=partition(tabla, ip, iu, &m); /*La m es el elemento medio despues de median, pero en partition cambia a la posicion inicial*/
+      ret=partition(tabla, ip, iu, &m); 
       if(ret!= (-1))
       {
         count+=ret;
@@ -300,7 +300,6 @@ int median_avg(int *tabla, int ip, int iu,int *pos)
     return ERR;
   }
 
-  /*Esto devueleve el valor del elemento medio de la tabla, no su indice. Está bien?*/
   (*pos)=(ip+iu)/2;
 
   if(!pos)
@@ -321,7 +320,6 @@ int aux;
     return ERR;
   }
 
-  /*Esto devueleve el valor del elemento medio de la tabla, no su indice. Está bien?*/
   aux=(ip+iu)/2;
 
     if ((tabla[aux] < tabla[ip] && tabla[aux] > tabla[iu]) || (tabla[aux] > tabla[ip] && tabla[aux] < tabla[iu]))
